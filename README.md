@@ -16,6 +16,7 @@ Study of SF4 + Docker.
 
 @todo:
 
-- [ ] Replace PHP7 docker run image to something like this : ``` docker run -it --rm --name my-running-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:7.0-cli php your-script.php ```
+- [ ] Replace PHP7 docker run image to something like this : ``` docker run -it --rm --name my-running-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:7.0-cli php your-script.php ``` or ``` docker run -d -p 80:80 --name my-apache-php-app -v "$PWD":/var/www/html php:7.0-apache ```
+
 
 References: https://symfony.com/doc/master/setup.html
