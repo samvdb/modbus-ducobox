@@ -1,7 +1,7 @@
 {
     "type": "project",
     "name": "vinnyfs89/docker-symfony-4",
-    "license": "library",
+    "license": "proprietary",
     "require": {
         "php": "^7.0.8",
         "sensio/framework-extra-bundle": "^5.1",
@@ -54,7 +54,7 @@
     "extra": {
         "symfony": {
             "id": "01BZBDEP3YVDAD8HJMR050R2G1",
-            "allow-contrib": false
+            "allow-contrib": true
         }
     }
 }
