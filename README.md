@@ -1,4 +1,4 @@
-# study-symfony-4
+# docker-symfony-4
 
 ### About
 
