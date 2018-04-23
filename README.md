@@ -14,4 +14,6 @@ Tips:
 - Use 'console' to help and create things ``` bin/console make:controller lie ```
 - Checking Requirements: ```php vendor/bin/requirements-checker ```
 
-References: https://symfony.com/doc/master/setup.html
+References: 
+- https://symfony.com/doc/master/setup.html
+- http://blog.joeymasip.com/docker-for-symfony-4/
