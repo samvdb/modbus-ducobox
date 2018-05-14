@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a9b75325333790e06bd68bda3737cf94",
+    "content-hash": "96c4f5947873a7a4fcde0a95432330c4",
     "packages": [
         {
             "name": "aldas/modbus-tcp-client",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/aldas/modbus-tcp-client.git",
-                "reference": "34f66be20b7011fb3a33e0ace669f83368d91337"
+                "url": "https://github.com/samvdb/modbus-tcp-client.git",
+                "reference": "f7ffadffac7767c2aa11f0fb71f6702d9e61588a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aldas/modbus-tcp-client/zipball/34f66be20b7011fb3a33e0ace669f83368d91337",
-                "reference": "34f66be20b7011fb3a33e0ace669f83368d91337",
+                "url": "https://api.github.com/repos/samvdb/modbus-tcp-client/zipball/f7ffadffac7767c2aa11f0fb71f6702d9e61588a",
+                "reference": "f7ffadffac7767c2aa11f0fb71f6702d9e61588a",
                 "shasum": ""
             },
             "require": {
@@ -35,7 +35,28 @@
                     "ModbusTcpClient\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit"
+                ],
+                "test-unit": [
+                    "vendor/bin/phpunit --testsuite 'unit-tests'"
+                ],
+                "test-integration": [
+                    "vendor/bin/phpunit --testsuite 'integration-tests'"
+                ],
+                "test-ci": [
+                    "vendor/bin/phpunit --coverage-clover report/coverage.xml"
+                ],
+                "test-coverage": [
+                    "vendor/bin/phpunit --coverage-html report/html"
+                ]
+            },
             "license": [
                 "Apache-2.0"
             ],
@@ -43,7 +64,10 @@
             "keywords": [
                 "modbus"
             ],
-            "time": "2018-04-30T12:52:48+00:00"
+            "support": {
+                "source": "https://github.com/samvdb/modbus-tcp-client/tree/master"
+            },
+            "time": "2018-05-09T12:10:39+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -409,12 +433,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "b4f2b2fe5d5726e08a7d46fe3149b577e738463a"
+                "reference": "c0970c7889bfd33504c4fa54f35451c27897381d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/b4f2b2fe5d5726e08a7d46fe3149b577e738463a",
-                "reference": "b4f2b2fe5d5726e08a7d46fe3149b577e738463a",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/c0970c7889bfd33504c4fa54f35451c27897381d",
+                "reference": "c0970c7889bfd33504c4fa54f35451c27897381d",
                 "shasum": ""
             },
             "require": {
@@ -458,7 +482,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2018-04-24T03:37:48+00:00"
+            "time": "2018-05-14T15:49:16+00:00"
         },
         {
             "name": "easycorp/easy-log-handler",

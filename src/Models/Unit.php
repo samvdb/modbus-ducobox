@@ -1,47 +1,35 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Sam
- * Date: 14/05/2018
- * Time: 18:37
- */
 
 namespace App\Models;
 
-
-use App\Provider\DucoboxProvider;
-
-class Unit
+class Unit extends Type
 {
-    /**
-     * @var DucoboxProvider
-     */
-    protected $provider;
-    /**
-     * @var int
-     */
-    protected $node;
-
-    public function __construct(DucoboxProvider $provider, $node)
-    {
-        $this->provider = $provider;
-        $this->node = $node;
-    }
-
-    /**
-     * @return int
-     */
-    public function getType()
-    {
-        return $this->get(0);
-    }
 
     /**
      * @return int
      */
     public function getStatus()
     {
-        return $this->get(1);
+        switch ($this->get(1)) {
+            case StatusEnum::AUTO:
+                return 'auto';
+            case StatusEnum::TEN_MIN_HIGH:
+                return '10 minutes high';
+            case StatusEnum::TWENTY_MIN_HIGH:
+                return '20 minutes high';
+            case StatusEnum::THIRTY_MIN_HIGH:
+                return '30 minutes high';
+            case StatusEnum::MANUAL_LOW:
+                return 'manual low';
+            case StatusEnum::MANUAL_MEDIUM:
+                return 'manual medium';
+            case StatusEnum::MANUAL_HIGH:
+                return 'manual high';
+            case StatusEnum::NOT_HOME:
+                return 'not home';
+            case StatusEnum::ERROR:
+                return 'error';
+        }
     }
 
     /**
@@ -72,39 +60,21 @@ class Unit
     }
 
     /**
-     * @return int
+     * @return array
      */
-    public function getLocation()
+    public function data()
     {
-        return $this->get(9);
+        return [
+            'name' => $this->__toString(),
+            'type' => $this->getType(),
+            'status' => $this->getStatus(),
+            'ventilation_position' => $this->getVentilationPosition(),
+            'location' => $this->getLocation(),
+        ];
     }
 
-    /**
-     * @param $address
-     * @return string
-     */
-    private function address($address)
+    public function __toString()
     {
-        return intval(sprintf('%d%d', $this->node, $address));
-    }
-
-    /**
-     * @param $address
-     *
-     * @return int
-     */
-    protected function write($address, $value)
-    {
-        return $this->provider->writeHolding($this->address($address), $value);
-    }
-
-    /**
-     * @param $address
-     *
-     * @return int
-     */
-    protected function get($address)
-    {
-        return $this->provider->readInput($this->address($address));
+        return 'Ducobox Focus';
     }
 }

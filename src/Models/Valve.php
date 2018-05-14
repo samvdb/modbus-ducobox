@@ -14,7 +14,10 @@ use App\Provider\DucoboxProvider;
 class Valve extends Unit
 {
 
-
+    public function __toString()
+    {
+        return 'Valve';
+    }
 
 
     /**
@@ -22,7 +25,7 @@ class Valve extends Unit
      */
     public function getIndoorTemperature()
     {
-        return $this->get(3);
+        return ($this->get(3) / 10);
     }
 
     /**
@@ -38,10 +41,25 @@ class Valve extends Unit
      */
     public function getHumidity()
     {
-        return $this->get(5);
+        return ($this->get(5) / 100);
     }
 
-
+    /**
+     * @return array
+     */
+    public function data()
+    {
+        return [
+            'name' => $this->__toString(),
+            'type' => $this->getType(),
+            'status' => $this->getStatus(),
+            'ventilation_position' => $this->getVentilationPosition(),
+            'indoor_temperature' => $this->getIndoorTemperature(),
+            'co2' => $this->getCo2(),
+            'humidity' => $this->getHumidity(),
+            'location' => $this->getLocation(),
+        ];
+    }
 
 
 }

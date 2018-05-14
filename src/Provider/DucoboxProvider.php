@@ -9,6 +9,9 @@
 namespace App\Provider;
 
 
+use App\Models\HardwareEnum;
+use App\Models\Unit;
+use App\Models\Valve;
 use Exception;
 use ModbusTcpClient\Network\BinaryStreamConnection;
 use ModbusTcpClient\Packet\ModbusFunction\ReadHoldingRegistersRequest;
@@ -26,10 +29,16 @@ class DucoboxProvider
      * @var LoggerInterface
      */
     private $logger;
+    private $host;
+    private $port;
+    private $unitId;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct($host, $port, $unitId, LoggerInterface $logger)
     {
         $this->logger = $logger;
+        $this->host = $host;
+        $this->port = $port;
+        $this->unitId = $unitId;
     }
 
     /**
@@ -38,9 +47,8 @@ class DucoboxProvider
     public function getClient()
     {
         $connection = BinaryStreamConnection::getBuilder()
-            ->setHost('10.0.1.20')
-            ->setPort(502)
-            ->setProtocol('tcp')
+            ->setHost($this->host)
+            ->setPort($this->port)
 //            ->setLogger($this->logger)
             ->build();
 
@@ -53,7 +61,7 @@ class DucoboxProvider
      */
     public function readInput($address)
     {
-        $packet = new ReadInputRegistersRequest($address, 1, 1);
+        $packet = new ReadInputRegistersRequest($address, 1, $this->unitId);
 
         $response = $this->read($packet);
 
@@ -73,7 +81,7 @@ class DucoboxProvider
      */
     public function writeHolding($address, $value)
     {
-        $packet = new WriteSingleRegisterRequest($address, $value, 1);
+        $packet = new WriteSingleRegisterRequest($address, $value, $this->unitId);
 
         /** @var WriteSingleRegisterResponse $response */
         $response = $this->write($packet);
@@ -90,7 +98,7 @@ class DucoboxProvider
         $client = $this->getClient();
         try {
             $connect = $client->connect();
-            $binaryData =$connect->sendAndReceive($packet);
+            $binaryData = $connect->sendAndReceive($packet);
 //            var_dump($binaryData);die;
 
             $response = ResponseFactory::parseResponseOrThrow($binaryData);
@@ -98,8 +106,7 @@ class DucoboxProvider
             return $response;
 
 
-
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
             echo $exception->getMessage() . PHP_EOL;
             die;
         } finally {
@@ -112,7 +119,7 @@ class DucoboxProvider
         $client = $this->getClient();
         try {
             $connect = $client->connect();
-            $binaryData =$connect->sendAndReceive($packet);
+            $binaryData = $connect->sendAndReceive($packet);
 //            var_dump($binaryData);die;
 
             $response = ResponseFactory::parseResponseOrThrow($binaryData);
@@ -120,12 +127,29 @@ class DucoboxProvider
             return $response;
 
 
-
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
             echo $exception->getMessage() . PHP_EOL;
             die;
         } finally {
             $client->close();
+        }
+    }
+
+    /**
+     * @param $type
+     * @return string
+     */
+    public function parseTypeClass($type)
+    {
+        switch ($type) {
+            case HardwareEnum::DUCOBOX:
+                return Unit::class;
+            case HardwareEnum::CO_VALVE:
+                return Valve::class;
+            case HardwareEnum::HUMIDITY_VALVE:
+                return Valve::class;
+            default:
+                return null;
         }
     }
 }

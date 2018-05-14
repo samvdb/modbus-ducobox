@@ -26,6 +26,12 @@
         },
         "sort-packages": true
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/samvdb/modbus-tcp-client.git"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "src/"
