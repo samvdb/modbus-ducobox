@@ -9,7 +9,39 @@
 namespace App\Models;
 
 
-class Valve
+use App\Provider\DucoboxProvider;
+
+class Valve extends Unit
 {
+
+
+
+
+    /**
+     * @return int
+     */
+    public function getIndoorTemperature()
+    {
+        return $this->get(3);
+    }
+
+    /**
+     * @return int
+     */
+    public function getCo2()
+    {
+        return $this->get(4);
+    }
+
+    /**
+     * @return int
+     */
+    public function getHumidity()
+    {
+        return $this->get(5);
+    }
+
+
+
 
 }
