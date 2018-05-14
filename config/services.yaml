@@ -1,7 +1,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-
+  modbus_host: "%env(HOST)%"
+  modbus_port: "%env(PORT)%"
+  unit: "%env(UNIT_ID)%"
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -20,6 +22,14 @@ services:
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
         exclude: '../src/{DataFixtures,Entity,Migrations,Tests}'
+
+
+    App\Provider\DucoboxProvider:
+      arguments:
+        - "%modbus_host%"
+        - "%modbus_port%"
+        - "%unit%"
+
 
     # controllers are imported separately to make sure they
     # have the tag that allows actions to type-hint services
